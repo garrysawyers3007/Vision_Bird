@@ -8,7 +8,8 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
 
     % Axes layout
     axGame = axes('Parent', fig, 'Units', 'normalized', 'Position', [0.05 0.1 0.55 0.85]);
-    imshow(bg, 'Parent', axGame);
+    image(axGame, [0 500], [0 700], flipud(bg));
+    set(axGame, 'YDir', 'normal'); 
     hold(axGame, 'on');
     axis(axGame, [0 500 0 700]);
     axis manual;
