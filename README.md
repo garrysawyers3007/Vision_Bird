@@ -24,3 +24,6 @@ This is a MATLAB implementation of the classic Flappy Bird game controlled by co
 ## Demo
 
 ## Credits
+picture goes here
+
+Vaibhav Mahapatra - Computer Vision Wizard; Niranjan Sundararajan - Flappiest Bird; Gauransh Sawhney - Consolidation King; Hamsitha Challagundla - Marketing Magician; Akanksha Tanwar - Project Manager (self-declared); Seher Bhaskar - Documentation Duchess
