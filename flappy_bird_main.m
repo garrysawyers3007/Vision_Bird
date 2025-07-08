@@ -1,0 +1,33 @@
+function flappy_bird_main
+    persistent high_score; %global
+    if isempty(high_score)
+        high_score = 0;
+    end
+    
+    fig = figure('Color', 'white', ...
+                 'MenuBar', 'none', 'ToolBar', 'none', ...
+                 'NumberTitle', 'off', 'Name', 'Flappy Bird', ...
+                 'Position', [100 100 1000 500]);
+
+    show_start_screen();
+
+    function show_start_screen()
+        clf(fig);
+
+        uicontrol('Style', 'text', ...
+                  'String', ['High Score: ' num2str(high_score)], ...
+                  'FontSize', 14, ...
+                  'Position', [350 300 300 60], ...
+                  'BackgroundColor', 'white');
+
+        uicontrol('Style', 'pushbutton', 'String', 'Start Game', ...
+                  'FontSize', 14, ...
+                  'Position', [420 200 160 50], ...
+                  'Callback', @(~,~) start_game_from_calibration(fig));
+    end
+
+    function start_game_from_calibration(fig)
+        [cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax] = calibrate_color();
+        start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, @show_start_screen);
+    end
+end
