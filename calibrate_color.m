@@ -13,7 +13,7 @@ function [cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, face_img] = calibrate_color(u
         % Crop and store face image
         face_img = imcrop(frame, rect.Position);
     end
-    
+
     pause(1);
     frame = snapshot(cam);
 
