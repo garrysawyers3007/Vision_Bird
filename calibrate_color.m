@@ -1,6 +1,6 @@
 function [cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, face_img] = calibrate_color(use_face)
-    % cam = webcam('Logitech Webcam C925e');
-    cam = webcam();
+    cam = webcam('Logitech Webcam C925e');
+    %cam = webcam('Integrated Camera');
     
     face_img = zeros(2);
     if use_face
