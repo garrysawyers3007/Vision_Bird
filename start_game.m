@@ -26,14 +26,14 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
     rectangle(axGame, 'Position', [0 0 500 700], 'EdgeColor', [0.2 0.2 0.2], 'LineWidth', 2);
 
     % Gameplay constants
-    speeding_factor = 3;
+    speeding_factor = 2;
     gravity = -0.6 * speeding_factor^2;
     jump_velocity = 10 * speeding_factor;
     pipe_speed = 2.5 * speeding_factor;
 
     pipe_width = 60; pipe_spacing = 300;
     min_gap_y = 180; max_gap_y = 520;
-    min_gap_size = 140; max_gap_size = 240;
+    min_gap_size = 200; max_gap_size = 240;
 
     bird_logic = true;
 
@@ -85,6 +85,8 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
 
     % Main loop
     running = true;
+    framecount = 0;
+    pause(3)
     while running && ishandle(fig)
         % ---- Webcam input and flap detection ----
         frame = fliplr(snapshot(cam));
@@ -108,14 +110,28 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
         end
 
         % ---- Visual update: webcam + mask ----
-        frame = insertShape(frame, 'Rectangle', [mirroredLeftZone; mirroredRightZone], ...
-                            'Color', 'blue', 'LineWidth', 10);
-        stats = regionprops(mask, 'BoundingBox');
-        for i = 1:numel(stats)
-            frame = insertShape(frame, 'Rectangle', stats(i).BoundingBox, 'Color', 'green');
+        framecount = framecount + 1;
+        if framecount >= 3
+            framecount = 0;
+            frame = insertShape(frame, 'Rectangle', [mirroredLeftZone; mirroredRightZone], ...
+                                'Color', 'blue', 'LineWidth', 10);
+            % stats = regionprops(mask, 'BoundingBox');
+            % for i = 1:numel(stats)
+            %     frame = insertShape(frame, 'Rectangle', stats(i).BoundingBox, 'Color', 'green');
+            % end
+
+            imshow(frame, 'Parent', axCam);
+            imshow(mask, 'Parent', axMask);
+            
+            % if ~exist('frameImg', 'var')
+            %     frameImg = flipud(image(axCam, 'CData', frame));
+            %     maskImg = flipud(image(axMask, 'CData', mask));
+            % else
+            %     set(frameImg, 'CData', frame);
+            %     set(maskImg, 'CData', mask);
+            % end
+
         end
-        imshow(frame, 'Parent', axCam);
-        imshow(mask, 'Parent', axMask);
 
         % ---- Game logic ----
         bird_vy = bird_vy + gravity;
