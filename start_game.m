@@ -1,4 +1,4 @@
-function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_screen)
+function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_screen, face_img)
     persistent high_score;
     if isempty(high_score), high_score = 0; end
 
