@@ -106,7 +106,7 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
 
         % ---- Visual update: webcam + mask ----
         frame = insertShape(frame, 'Rectangle', [mirroredLeftZone; mirroredRightZone], ...
-                            'Color', 'blue', 'LineWidth', 5);
+                            'Color', 'blue', 'LineWidth', 10);
         stats = regionprops(mask, 'BoundingBox');
         for i = 1:numel(stats)
             frame = insertShape(frame, 'Rectangle', stats(i).BoundingBox, 'Color', 'green');

@@ -1,5 +1,6 @@
 function [cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax] = calibrate_color()
-    cam = webcam('Logitech Webcam C925e');
+    % cam = webcam('Logitech Webcam C925e');
+    cam = webcam();
     pause(1);
     frame = snapshot(cam);
 
