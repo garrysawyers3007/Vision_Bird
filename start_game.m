@@ -26,7 +26,7 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
     rectangle(axGame, 'Position', [0 0 500 700], 'EdgeColor', [0.2 0.2 0.2], 'LineWidth', 2);
 
     % Gameplay constants
-    speeding_factor = 2;
+    speeding_factor = 1.5;
     gravity = -0.6 * speeding_factor^2;
     jump_velocity = 10 * speeding_factor;
     pipe_speed = 2.5 * speeding_factor;
@@ -114,7 +114,7 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
         if framecount >= 3
             framecount = 0;
             frame = insertShape(frame, 'Rectangle', [mirroredLeftZone; mirroredRightZone], ...
-                                'Color', 'blue', 'LineWidth', 10);
+                                'Color', 'red', 'LineWidth', 10);
             % stats = regionprops(mask, 'BoundingBox');
             % for i = 1:numel(stats)
             %     frame = insertShape(frame, 'Rectangle', stats(i).BoundingBox, 'Color', 'green');
