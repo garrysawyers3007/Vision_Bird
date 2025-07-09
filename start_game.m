@@ -4,14 +4,24 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
 
     clf(fig);
 
+    bg = imread('bg.png');
+
     % Axes layout
     axGame = axes('Parent', fig, 'Units', 'normalized', 'Position', [0.05 0.1 0.55 0.85]);
+    image(axGame, [0 500], [0 700], flipud(bg));
+    set(axGame, 'YDir', 'normal'); 
+    hold(axGame, 'on');
+    axis(axGame, [0 500 0 700]);
+    axis manual;
+    daspect(axGame, [1 1 1]);
+
     axCam  = axes('Parent', fig, 'Units', 'normalized', 'Position', [0.65 0.55 0.3 0.35]);
     axMask = axes('Parent', fig, 'Units', 'normalized', 'Position', [0.65 0.1 0.3 0.35]);
 
     axis(axGame, [0 500 0 700]); axis manual; daspect(axGame, [1 1 1]);
     set(axGame, 'XColor', 'none', 'YColor', 'none', 'box', 'off', 'Color', 'white');
     set(axGame, 'YDir', 'normal');  % (0,0) is bottom-left
+
     hold(axGame, 'on');
     rectangle(axGame, 'Position', [0 0 500 700], 'EdgeColor', [0.2 0.2 0.2], 'LineWidth', 2);
 
