@@ -1,5 +1,20 @@
-function [cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax] = calibrate_color()
-    cam = webcam('Logitech Webcam C925e');
+function [cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, face_img] = calibrate_color(use_face)
+    % cam = webcam('Logitech Webcam C925e');
+    cam = webcam();
+    
+    face_img = zeros(2);
+    if use_face
+        clf;
+        % Show a frame and let user draw a rectangle
+        frame = snapshot(cam);
+        h = imshow(frame);
+        title('Draw a box around your face');
+        rect = drawrectangle();
+
+        % Crop and store face image
+        face_img = imcrop(frame, rect.Position);
+    end
+
     pause(1);
     frame = snapshot(cam);
 
@@ -20,4 +35,6 @@ function [cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax] = calibrate_color()
     Hmin = max(min(H(:)) - 0.05, 0); Hmax = min(max(H(:)) + 0.05, 1);
     Smin = max(min(S(:)) - 0.2, 0);  Smax = 1;
     Vmin = 0.2; Vmax = 1;
+
+   
 end
