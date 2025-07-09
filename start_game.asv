@@ -11,11 +11,12 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
 
     axis(axGame, [0 500 0 700]); axis manual; daspect(axGame, [1 1 1]);
     set(axGame, 'XColor', 'none', 'YColor', 'none', 'box', 'off', 'Color', 'white');
+    set(axGame, 'YDir', 'normal');  % (0,0) is bottom-left
     hold(axGame, 'on');
     rectangle(axGame, 'Position', [0 0 500 700], 'EdgeColor', [0.2 0.2 0.2], 'LineWidth', 2);
 
     % Gameplay constants
-    speeding_factor = 2;
+    speeding_factor = 3;
     gravity = -0.6 * speeding_factor^2;
     jump_velocity = 10 * speeding_factor;
     pipe_speed = 2.5 * speeding_factor;
@@ -24,12 +25,28 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
     min_gap_y = 180; max_gap_y = 520;
     min_gap_size = 140; max_gap_size = 240;
 
+    bird_logic = true;
+
     % Bird
     bird_x = 100; bird_y = 350; bird_vy = 0;
-    bird_size = [30 30];
-    bird = rectangle(axGame, 'Position', [bird_x bird_y bird_size], 'FaceColor', 'yellow');
+    bird_size = [50 50];
 
-    % TODO - understand what this is
+    if ~bird_logic
+        bird = rectangle(axGame, 'Position', [bird_x bird_y bird_size], 'FaceColor', 'yellow');
+    else
+        [bird_img, ~, bird_alpha] = imread('images\flappy_mathworks.png');  % Load image and alpha channel
+        bird_img_resized = imresize(bird_img, bird_size);       % e.g., [30 30]
+        bird_alpha_resized = imresize(bird_alpha, bird_size);
+        bird_img = flipud(bird_img);
+        bird_alpha = flipud(bird_alpha);
+        bird_magnification_factor = 1;
+        bird = image('CData', bird_img, ...
+                 'XData', bird_x + [0 bird_magnification_factor*bird_size(1)], ...
+                 'YData', bird_y + [0 bird_magnification_factor*bird_size(2)], ...
+                 'Parent', axGame);
+        set(bird, 'AlphaData', bird_alpha);               % Set transparency
+    end
+
     % Pipes
     num_pipes = 3;
     pipes = gobjects(num_pipes, 2); pipe_xs = zeros(1, num_pipes); gap_sizes = zeros(1, num_pipes);
@@ -37,7 +54,7 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
         x = 500 + (i-1)*pipe_spacing;
         gap_size = randi([min_gap_size max_gap_size]);
         gap_y = randi([min_gap_y max_gap_y]);
-        [top, bottom] = create_pipe(axGame, x, gap_y, gap_size);
+        [top, bottom] = create_pipe(axGame, x, gap_y, gap_size, pipe_width);
         pipes(i,:) = [top, bottom]; pipe_xs(i) = x; gap_sizes(i) = gap_size;
     end
 
@@ -92,7 +109,13 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
         % ---- Game logic ----
         bird_vy = bird_vy + gravity;
         bird_y = bird_y + bird_vy;
-        set(bird, 'Position', [bird_x bird_y bird_size]);
+
+        if ~bird_logic
+            set(bird, 'Position', [bird_x bird_y bird_size]);
+        else
+            set(bird, 'XData', bird_x + [0 bird_size(1)], ...
+              'YData', bird_y + [0 bird_size(2)]);
+        end
 
         for i = 1:num_pipes
             pipe_xs(i) = pipe_xs(i) - pipe_speed;
@@ -100,7 +123,7 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
                 pipe_xs(i) = max(pipe_xs) + pipe_spacing;
                 gap_sizes(i) = randi([min_gap_size max_gap_size]);
                 gap_y = randi([min_gap_y max_gap_y]);
-                update_pipe(pipes(i,1), pipes(i,2), pipe_xs(i), gap_y, gap_sizes(i));
+                update_pipe(pipes(i,1), pipes(i,2), pipe_xs(i), gap_y, gap_sizes(i), pipe_width);
                 score = score + 1;
                 scoreText.String = ['Score: ' num2str(score)];
                 if score > high_score
@@ -108,7 +131,7 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
                     highScoreText.String = ['High Score: ' num2str(high_score)];
                 end
             else
-                update_pipe_x(pipes(i,1), pipes(i,2), pipe_xs(i));
+                update_pipe_x(pipes(i,1), pipes(i,2), pipe_xs(i), pipe_width);
             end
         end
 
@@ -127,14 +150,14 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
         drawnow limitrate;
         pause(0.01);
     end
-
+    
     function show_game_over()
         text(axGame, 180, 350, "Game Over", 'FontSize', 24, 'Color', 'r');
         uicontrol('Style', 'pushbutton', 'String', 'Restart', ...
-                  'Position', [150 10 100 30], ...
+                  'Position', [200 10 100 30], ...
                   'Callback', @(~,~) start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_screen));
         uicontrol('Style', 'pushbutton', 'String', 'Exit', ...
-                  'Position', [270 10 100 30], ...
+                  'Position', [320 10 100 30], ...
                   'Callback', @(~,~) show_start_screen());
     end
 end
