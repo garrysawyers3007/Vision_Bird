@@ -4,7 +4,7 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
 
     clf(fig);
 
-    bg = imread('bg.png');
+    bg = imread('images\bg.png');
 
     % Axes layout
     axGame = axes('Parent', fig, 'Units', 'normalized', 'Position', [0.05 0.1 0.55 0.85]);
