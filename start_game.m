@@ -18,12 +18,15 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
     axCam  = axes('Parent', fig, 'Units', 'normalized', 'Position', [0.65 0.55 0.3 0.35]);
     axMask = axes('Parent', fig, 'Units', 'normalized', 'Position', [0.65 0.1 0.3 0.35]);
 
-    set(axGame, 'XColor', 'none', 'YColor', 'none', 'box', 'off');
+    axis(axGame, [0 500 0 700]); axis manual; daspect(axGame, [1 1 1]);
+    set(axGame, 'XColor', 'none', 'YColor', 'none', 'box', 'off', 'Color', 'white');
+    set(axGame, 'YDir', 'normal');  % (0,0) is bottom-left
+
     hold(axGame, 'on');
     rectangle(axGame, 'Position', [0 0 500 700], 'EdgeColor', [0.2 0.2 0.2], 'LineWidth', 2);
 
     % Gameplay constants
-    speeding_factor = 2;
+    speeding_factor = 3;
     gravity = -0.6 * speeding_factor^2;
     jump_velocity = 10 * speeding_factor;
     pipe_speed = 2.5 * speeding_factor;
@@ -32,10 +35,25 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
     min_gap_y = 180; max_gap_y = 520;
     min_gap_size = 140; max_gap_size = 240;
 
+    bird_logic = true;
+
     % Bird
     bird_x = 100; bird_y = 350; bird_vy = 0;
-    bird_size = [30 30];
-    bird = rectangle(axGame, 'Position', [bird_x bird_y bird_size], 'FaceColor', 'yellow');
+    bird_size = [30 35];
+
+    if ~bird_logic
+        bird = rectangle(axGame, 'Position', [bird_x bird_y bird_size], 'FaceColor', 'yellow');
+    else
+        [bird_img, ~, bird_alpha] = imread('images\flappy_mathworks.png');  % Load image and alpha channel
+        bird_img = flipud(imresize(bird_img, bird_size));
+        bird_alpha = flipud(imresize(bird_alpha, bird_size));
+        bird_magnification_factor = 1;
+        bird = image('CData', bird_img, ...
+                 'XData', bird_x + [0 bird_magnification_factor*bird_size(1)], ...
+                 'YData', bird_y + [0 bird_magnification_factor*bird_size(2)], ...
+                 'Parent', axGame);
+        set(bird, 'AlphaData', bird_alpha);               % Set transparency
+    end
 
     % Pipes
     num_pipes = 3;
@@ -99,7 +117,13 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
         % ---- Game logic ----
         bird_vy = bird_vy + gravity;
         bird_y = bird_y + bird_vy;
-        set(bird, 'Position', [bird_x bird_y bird_size]);
+
+        if ~bird_logic
+            set(bird, 'Position', [bird_x bird_y bird_size]);
+        else
+            set(bird, 'XData', bird_x + [0 bird_size(1)], ...
+              'YData', bird_y + [0 bird_size(2)]);
+        end
 
         for i = 1:num_pipes
             pipe_xs(i) = pipe_xs(i) - pipe_speed;
