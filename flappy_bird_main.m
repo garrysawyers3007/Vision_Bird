@@ -48,6 +48,6 @@ function flappy_bird_main
 
     function start_game_from_calibration(use_face)
         [cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, face_img] = calibrate_color(use_face);
-        start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, @show_start_screen, face_img);
+        start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, @show_start_screen, face_img, use_face);
     end
 end

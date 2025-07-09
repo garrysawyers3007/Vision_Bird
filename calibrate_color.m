@@ -1,13 +1,14 @@
 function [cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, face_img] = calibrate_color(use_face)
     % cam = webcam('Logitech Webcam C925e');
     cam = webcam();
-
-     if use_face
+    
+    face_img = zeros(2);
+    if use_face
         clf;
         % Show a frame and let user draw a rectangle
         frame = snapshot(cam);
         h = imshow(frame);
-        title('Draw a box around your face and double click');
+        title('Draw a box around your face');
         rect = drawrectangle();
 
         % Crop and store face image

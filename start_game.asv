@@ -46,8 +46,7 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
     else
         [bird_img, ~, bird_alpha] = imread('images\flappy_mathworks.png');  % Load image and alpha channel
         if use_face
-            bird_img = face_img;
-        end
+            bird_img = face
         bird_img = flipud(imresize(bird_img, bird_size));
         bird_alpha = flipud(imresize(bird_alpha, bird_size));
         bird_magnification_factor = 1;
@@ -148,13 +147,13 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
 
         for i = 1:num_pipes
             if check_collision(bird, pipes(i,1)) || check_collision(bird, pipes(i,2))
-                show_game_over(face_img,use_face);
+                show_game_over();
                 return;
             end
         end
 
         if bird_y <= 0 || bird_y + bird_size(2) >= 700
-            show_game_over(face_img,use_face);
+            show_game_over();
             return;
         end
 
@@ -162,11 +161,11 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
         pause(0.01);
     end
     
-    function show_game_over(face_img,use_face)
+    function show_game_over()
         text(axGame, 180, 350, "Game Over", 'FontSize', 24, 'Color', 'r');
         uicontrol('Style', 'pushbutton', 'String', 'Restart', ...
                   'Position', [200 10 100 30], ...
-                  'Callback', @(~,~) start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_screen,face_img,use_face));
+                  'Callback', @(~,~) start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_screen));
         uicontrol('Style', 'pushbutton', 'String', 'Exit', ...
                   'Position', [320 10 100 30], ...
                   'Callback', @(~,~) show_start_screen());
