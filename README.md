@@ -1,38 +1,78 @@
-# Flappy Bird with Wing Tracking (MATLAB)
+## 🐤 Vision-Controlled Flappy Bird (MATLAB)
 
-## Introduction  
-This is a MATLAB implementation of the classic Flappy Bird game controlled by computer vision. The game tracks the user's "wings" — colored objects of the user's choice — and detects flapping motions to make the bird fly. This hands-free interaction offers a unique, physical way to play Flappy Bird.
+This is a **MATLAB-based implementation** of the classic *Flappy Bird* game — controlled entirely by **computer vision**. Instead of pressing buttons, players use **colored objects (your "wings")** and perform **flapping motions** to control the bird. This hands-free interaction brings a fun, physical twist to the nostalgic game!
 
-## How to Play  
-- Show a colored object (your "wings") in front of your camera, and when prompted, drag a box around the color of the wings to calibrate. 
-- Flap your wings (move the colored objects up and down) to make the bird flap and fly. Ensure the wings exit the marked box for the program to detect a flap.
-- If you don't flap, the bird starts falling due to gravity. Avoid the pipes and keep flying as long as possible.
 
-## Implementation Details
+## 🎮 How to Play
 
-Image Processing Toolbox – for color space conversion, masking, and morphological operations
-Computer Vision Toolbox – for video input (webcam), frame capture, and live preview
+1. **Clone the Repository**
+   ```bash
+   git clone https://github.com/garrysawyers3007/Vision_Bird.git
+   ```
+2. **Install MATLAB**  
+   If you haven't already, [download and install MATLAB](https://www.mathworks.com/help/install/ug/install-products-with-internet-connection.html).  Make sure to include the following toolboxes:
+   - *Image Acquisition Toolbox*
+   - *Computer Vision Toolbox*
+
+3. **Set Up Your Webcam**  
+   The game uses your default webcam by default. To use a different camera, run `webcamlist` in the MATLAB command window and copy the desired camera name. Update this line in `calibrate_color.m`:
+     ```
+     cam = webcam("Your Camera Name");
+     ```
+
+4. **Launch the Game**  
+   In MATLAB, navigate to the cloned folder and run:
+   ```
+   flappy_bird_main
+   ```
+
+5. **Choose Your Bird**  
+   You'll be prompted to either:
+   - Use the default bird sprite, or  
+   - Use your **own face** as the bird!  
+   If using your face, draw a bounding box around it when prompted.
+
+6. **Calibrate Your Wings**  
+   - Hold two colored objects of the same color in your hands (your "wings").
+   - Use the calibration window to draw a bounding box within one wing to detect its color.
+   - Make sure the color **contrasts well with the background** for accurate detection.
+
+7. **Start Flapping!**  
+   After a 3–2–1 countdown:
+   - Flap your "wings" (move the colored objects up and down).
+   - Ensure they **exit the red detection boxes** to register a flap.
+   - Each flap gives the bird a vertical velocy to fly higher.
+
+8. **Avoid Obstacles**  
+   Just like in the original game:
+   - If you stop flapping, the bird falls due to gravity.
+   - Dodge the pipes and try to survive as long as possible!
+
+
+## 🔧 Implementation Details
 
 ### User Interface (UI)  
-The game window includes:
-- A live webcam feed showing the player's movements.
-- A mask preview showing the detected colored regions, which later disappears once the user starts the game.
-- A main gameplay area displaying the bird, pipes, and score.
-- After the game is over, the interface displays “Game Over” and provides Restart and Exit buttons.
-- The layout is built using MATLAB’s UI components like axes, rectangles, and text.
+The game window includes:  
+- A live webcam feed showing the player's movements.  
+- A mask preview displaying the detected colored wings, helping users track their wings during gameplay.  
+- A main gameplay area displaying the bird, pipes, and score.  
+- After the game ends, the interface shows **“Game Over”** along with **Restart** and **Exit** buttons.  
+- The layout is built using MATLAB’s UI components such as axes, rectangles, and text.
 
 ### Computer Vision  
-- The program captures video frames using MATLAB’s webcam interface, mirrored for natural interaction.
-- The player selects a color to represent their "wings" using a calibration step.
-- The system converts video frames to HSV color space for reliable color detection under different lighting.
-- Binary masks are created to isolate regions matching the selected color. 
-- Contours or blobs of the specified color are tracked to identify wing positions.  
-- The game defines detection zones on each side of the camera feed. Flapping is detected by analyzing vertical motion patterns of the wings, triggered when the wing object exits the detection zone. 
-- A “flap” is triggered when the colored objects enter and then leave both zones simultaneously.
+- The program captures video frames using MATLAB’s webcam interface, with the feed mirrored for natural interaction.  
+- The player selects a color to represent their "wings" during a calibration step.  
+- Frames are converted to HSV color space for robust color detection under varying lighting conditions.  
+- Binary masks isolate regions matching the selected wing color.  
+- Detection zones are defined on each side of the camera feed. The algorithm uses bitwise operations to determine how much of the wing is within these zones.  
+- A **flap** is triggered when:  
+  1. Wings were simultaneously inside the detection zones in the previous frame, and  
+  2. They are no longer in the detection zones in the current frame.
 
-## Demo
+## 🎥 Demo and Credits
+Watch Niranjan how to run and play this game here: [Demo](https://drive.google.com/file/d/1LSWjWkQT2WTPhmtvQxfIMlbeoO29xxlh/view?usp=drivesdk)
 
-## Credits
-picture goes here
-
-Vaibhav Mahapatra - Computer Vision Wizard; Niranjan Sundararajan - Flappiest Bird; Gauransh Sawhney - Consolidation King; Hamsitha Challagundla - Marketing Magician; Akanksha Tanwar - Project Manager (self-declared); Seher Bhaskar - Documentation Duchess
+Meet our team: 
+![https://drive.google.com/file/d/1MieWhRTgMQzdkcGof7AXjNfAClHeTKi6/view?usp=drivesdk](images/goat.jpg")
+[Niranjan Sundararajan](https://www.linkedin.com/in/sundararajann) - Flappiest Bird; [Seher Bhaskar](https://www.linkedin.com/in/seher-bhaskar) - Documentation Duchess; [Akanksha Tanwar](https://www.linkedin.com/in/akankshatanwar17) - Project Manager (self-declared); [Hamsitha Challagundla](https://www.linkedin.com/in/hamsithachallagundla) - Marketing Magician; 
+[Vaibhav Mahapatra](https://www.linkedin.com/in/vaibhav-mahapatra-aa0a591a8) - Komedy King;  [Gauransh Sawhney](https://www.linkedin.com/in/gauransh3007) - Consolidation King; 
