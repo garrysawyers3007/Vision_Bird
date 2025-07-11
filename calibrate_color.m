@@ -19,7 +19,7 @@ function [cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, face_img] = calibrate_color(u
     pause(1);
     frame = snapshot(cam);
 
-    hCalib = figure('Name', 'Calibration - Draw box around object', ...
+    hCalib = figure('Name', 'Calibration - Draw box in the colored object', ...
                     'Position', [200 200 640 480]);
     imshow(frame);
     title('Draw box around the colored object');
