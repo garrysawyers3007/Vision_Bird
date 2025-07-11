@@ -73,7 +73,7 @@ The game window includes:
 Here's a flapping demo. Note how the bird hops everytime his wings flap **out** of the detection zones:
 <img src="images/demo.gif" alt="Flap Demo" width="500"/>
 
-If you want a rundown of how to run the game and go through the callibration phase, check it out here: [Demo]("https://drive.google.com/file/d/1Mr8nJcGTsq-wVExSaDvRlMApsTDyj2di/view?usp=drivesdk")
+If you want a rundown of how to run the game and go through the callibration phase, check it out here: [Demo](https://drive.google.com/file/d/1Mr8nJcGTsq-wVExSaDvRlMApsTDyj2di/view?usp=drivesdk)
 
 Meet the team:
 
