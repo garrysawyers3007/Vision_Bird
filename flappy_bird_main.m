@@ -3,6 +3,7 @@ function flappy_bird_main
     if isempty(high_score)
         high_score = 0;
     end
+    addpath('.\images\');
 
     fig = figure('Color', 'white', ...
                  'MenuBar', 'none', 'ToolBar', 'none', ...

@@ -26,7 +26,7 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
     rectangle(axGame, 'Position', [0 0 500 700], 'EdgeColor', [0.2 0.2 0.2], 'LineWidth', 2);
 
     % Gameplay constants
-    speeding_factor = 1.5;
+    speeding_factor = 2;
     gravity = -0.6 * speeding_factor^2;
     jump_velocity = 10 * speeding_factor;
     pipe_speed = 2.5 * speeding_factor;
@@ -78,7 +78,7 @@ function start_game(fig, cam, Hmin, Hmax, Smin, Smax, Vmin, Vmax, show_start_scr
     % Flap detection setup
     frame = snapshot(cam);
     [frameH, frameW, ~] = size(frame);
-    zoneW = round(frameW * 0.2); zoneH = round(frameH * 0.5);
+    zoneW = round(frameW * 0.3); zoneH = round(frameH * 0.5);
     mirroredLeftZone = [frameW - zoneW + 1, 1, zoneW, zoneH];
     mirroredRightZone = [1, 1, zoneW, zoneH];
     pixelThreshold = 10; inZonePreviously = false;
