@@ -72,8 +72,10 @@ The game window includes:
 ## 🎥 Demo and Credits
 Watch Niranjan how to run and play this game here: [Demo](https://drive.google.com/file/d/1LSWjWkQT2WTPhmtvQxfIMlbeoO29xxlh/view?usp=drivesdk)
 
-Meet our team: 
-<img src="images/goat.jpg" alt="Team picture" width="400"/>
+Meet the team:
+
+
+<img src="images/goat.jpg" alt="Team picture" width="500"/>
 <!--![https://drive.google.com/file/d/1MieWhRTgMQzdkcGof7AXjNfAClHeTKi6/view?usp=drivesdk](images/goat.jpg)-->
 [Niranjan Sundararajan](https://www.linkedin.com/in/sundararajann) - Flappiest Bird; [Seher Bhaskar](https://www.linkedin.com/in/seher-bhaskar) - Documentation Duchess; [Akanksha Tanwar](https://www.linkedin.com/in/akankshatanwar17) - Project Manager (self-declared); [Hamsitha Challagundla](https://www.linkedin.com/in/hamsithachallagundla) - Marketing Magician; 
 [Vaibhav Mahapatra](https://www.linkedin.com/in/vaibhav-mahapatra-aa0a591a8) - Komedy King;  [Gauransh Sawhney](https://www.linkedin.com/in/gauransh3007) - Consolidation King; 
