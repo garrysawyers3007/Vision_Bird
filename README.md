@@ -1,6 +1,8 @@
 ## 🐤 Vision-Controlled Flappy Bird (MATLAB)
 
 This is a **MATLAB-based implementation** of the classic *Flappy Bird* game — controlled entirely by **computer vision**. Instead of pressing buttons, players use **colored objects (your "wings")** and perform **flapping motions** to control the bird. This hands-free interaction brings a fun, physical twist to the nostalgic game!
+
+
 <img src="images/demo.gif" alt="Flap Demo" width="500"/>
 
 ## 🎮 How to Play
